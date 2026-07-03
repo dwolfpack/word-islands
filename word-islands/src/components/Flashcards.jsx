@@ -8,7 +8,7 @@ export default function Flashcards({ words, lang, onDone }) {
 
   useEffect(() => {
     speak(word.english);
-  }, [word]);
+  }, [word.english]);
 
   return (
     <div className="flashcards">
