@@ -1,0 +1,110 @@
+[
+  {
+    "id": "animals",
+    "icon": "🐾",
+    "name": { "en": "Animal Island", "he": "אי החיות" },
+    "creature": "🐉",
+    "words": [
+      { "english": "elephant", "hebrew": "פיל", "emoji": "🐘" },
+      { "english": "monkey", "hebrew": "קוף", "emoji": "🐵" },
+      { "english": "lion", "hebrew": "אריה", "emoji": "🦁" },
+      { "english": "tiger", "hebrew": "נמר", "emoji": "🐯" },
+      { "english": "bear", "hebrew": "דוב", "emoji": "🐻" },
+      { "english": "wolf", "hebrew": "זאב", "emoji": "🐺" },
+      { "english": "snake", "hebrew": "נחש", "emoji": "🐍" },
+      { "english": "turtle", "hebrew": "צב", "emoji": "🐢" },
+      { "english": "penguin", "hebrew": "פינגווין", "emoji": "🐧" },
+      { "english": "dolphin", "hebrew": "דולפין", "emoji": "🐬" }
+    ]
+  },
+  {
+    "id": "colors",
+    "icon": "🎨",
+    "name": { "en": "Colors & Shapes Island", "he": "אי הצבעים והצורות" },
+    "creature": "🦚",
+    "words": [
+      { "english": "pink", "hebrew": "ורוד", "emoji": "🩷" },
+      { "english": "brown", "hebrew": "חום", "emoji": "🤎" },
+      { "english": "gray", "hebrew": "אפור", "emoji": "🩶" },
+      { "english": "circle", "hebrew": "עיגול", "emoji": "⭕" },
+      { "english": "triangle", "hebrew": "משולש", "emoji": "🔺" },
+      { "english": "square", "hebrew": "ריבוע", "emoji": "⬜" },
+      { "english": "star", "hebrew": "כוכב", "emoji": "⭐" },
+      { "english": "heart", "hebrew": "לב", "emoji": "❤️" },
+      { "english": "diamond", "hebrew": "יהלום", "emoji": "💎" },
+      { "english": "rainbow", "hebrew": "קשת", "emoji": "🌈" }
+    ]
+  },
+  {
+    "id": "food",
+    "icon": "🍓",
+    "name": { "en": "Food Island", "he": "אי האוכל" },
+    "creature": "🦊",
+    "words": [
+      { "english": "strawberry", "hebrew": "תות", "emoji": "🍓" },
+      { "english": "watermelon", "hebrew": "אבטיח", "emoji": "🍉" },
+      { "english": "grapes", "hebrew": "ענבים", "emoji": "🍇" },
+      { "english": "carrot", "hebrew": "גזר", "emoji": "🥕" },
+      { "english": "tomato", "hebrew": "עגבנייה", "emoji": "🍅" },
+      { "english": "cucumber", "hebrew": "מלפפון", "emoji": "🥒" },
+      { "english": "chicken", "hebrew": "עוף", "emoji": "🍗" },
+      { "english": "rice", "hebrew": "אורז", "emoji": "🍚" },
+      { "english": "soup", "hebrew": "מרק", "emoji": "🍲" },
+      { "english": "ice cream", "hebrew": "גלידה", "emoji": "🍦" }
+    ]
+  },
+  {
+    "id": "home",
+    "icon": "🏠",
+    "name": { "en": "Home Island", "he": "אי הבית" },
+    "creature": "🦥",
+    "words": [
+      { "english": "television", "hebrew": "טלוויזיה", "emoji": "📺" },
+      { "english": "phone", "hebrew": "טלפון", "emoji": "📱" },
+      { "english": "computer", "hebrew": "מחשב", "emoji": "💻" },
+      { "english": "mirror", "hebrew": "מראה", "emoji": "🪞" },
+      { "english": "shower", "hebrew": "מקלחת", "emoji": "🚿" },
+      { "english": "toilet", "hebrew": "שירותים", "emoji": "🚽" },
+      { "english": "teapot", "hebrew": "קומקום", "emoji": "🫖" },
+      { "english": "scissors", "hebrew": "מספריים", "emoji": "✂️" },
+      { "english": "broom", "hebrew": "מטאטא", "emoji": "🧹" },
+      { "english": "basket", "hebrew": "סל", "emoji": "🧺" }
+    ]
+  },
+  {
+    "id": "body",
+    "icon": "💪",
+    "name": { "en": "Body Island", "he": "אי הגוף" },
+    "creature": "🦖",
+    "words": [
+      { "english": "brain", "hebrew": "מוח", "emoji": "🧠" },
+      { "english": "bone", "hebrew": "עצם", "emoji": "🦴" },
+      { "english": "muscle", "hebrew": "שריר", "emoji": "💪" },
+      { "english": "lungs", "hebrew": "ריאות", "emoji": "🫁" },
+      { "english": "leg", "hebrew": "רגל", "emoji": "🦵" },
+      { "english": "finger", "hebrew": "אצבע", "emoji": "👆" },
+      { "english": "blood", "hebrew": "דם", "emoji": "🩸" },
+      { "english": "skull", "hebrew": "גולגולת", "emoji": "💀" },
+      { "english": "eyes", "hebrew": "עיניים", "emoji": "👀" },
+      { "english": "ear", "hebrew": "אוזן", "emoji": "👂" }
+    ]
+  },
+  {
+    "id": "clothes",
+    "icon": "🎒",
+    "name": { "en": "Clothes Island", "he": "אי הבגדים" },
+    "creature": "🧜",
+    "words": [
+      { "english": "gloves", "hebrew": "כפפות", "emoji": "🧤" },
+      { "english": "boots", "hebrew": "מגפיים", "emoji": "🥾" },
+      { "english": "sandals", "hebrew": "סנדלים", "emoji": "🩴" },
+      { "english": "swimsuit", "hebrew": "בגד ים", "emoji": "🩱" },
+      { "english": "shorts", "hebrew": "מכנסיים קצרים", "emoji": "🩳" },
+      { "english": "crown", "hebrew": "כתר", "emoji": "👑" },
+      { "english": "glasses", "hebrew": "משקפיים", "emoji": "👓" },
+      { "english": "ring", "hebrew": "טבעת", "emoji": "💍" },
+      { "english": "watch", "hebrew": "שעון יד", "emoji": "⌚" },
+      { "english": "backpack", "hebrew": "תיק גב", "emoji": "🎒" }
+    ]
+  }
+]
