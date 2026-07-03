@@ -1,0 +1,55 @@
+// UI strings in English and Hebrew. English vocabulary words are NEVER
+// translated — only instructions and chrome. RTL is handled by dir="rtl" in App.
+
+export const STRINGS = {
+  en: {
+    title: 'Word Islands',
+    chooseProfile: 'Who is playing?',
+    newProfile: 'New player',
+    yourName: 'Your name',
+    pickAvatar: 'Pick your animal',
+    pickPath: 'Age group',
+    path57: 'Ages 5–7',
+    path810: 'Ages 8–10',
+    start: "Let's go!",
+    back: 'Back',
+    backToMap: 'Back to the map',
+    chooseIsland: 'Choose an island!',
+    stickerBook: 'Sticker book',
+    learnInstruction: 'Tap the card to hear the word',
+    letsPlay: "Let's play!",
+    tapInstruction: 'Tap the right picture!',
+    memoryInstruction: 'Find the matching pairs!',
+    quizInstruction: 'Quiz time! One try per question',
+    tryAgain: 'Try again!',
+    greatJob: 'Great job!',
+    youEarned: 'You earned a new friend for your sticker book!',
+  },
+  he: {
+    title: 'איי המילים',
+    chooseProfile: 'מי משחק?',
+    newProfile: 'שחקן חדש',
+    yourName: 'השם שלך',
+    pickAvatar: 'בחרו חיה',
+    pickPath: 'קבוצת גיל',
+    path57: 'גילאי 5–7',
+    path810: 'גילאי 8–10',
+    start: 'יאללה!',
+    back: 'חזרה',
+    backToMap: 'חזרה למפה',
+    chooseIsland: 'בחרו אי!',
+    stickerBook: 'אלבום מדבקות',
+    learnInstruction: 'לחצו על הכרטיס כדי לשמוע את המילה',
+    letsPlay: 'בואו נשחק!',
+    tapInstruction: 'לחצו על התמונה הנכונה!',
+    memoryInstruction: 'מצאו את הזוגות!',
+    quizInstruction: 'חידון! ניסיון אחד לכל שאלה',
+    tryAgain: 'נסו שוב!',
+    greatJob: 'כל הכבוד!',
+    youEarned: 'הרווחתם חבר חדש לאלבום המדבקות!',
+  },
+};
+
+export function t(lang, key) {
+  return STRINGS[lang]?.[key] ?? STRINGS.en[key] ?? key;
+}
