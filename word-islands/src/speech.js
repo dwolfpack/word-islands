@@ -19,8 +19,19 @@ if (hasSynthesis()) {
   window.speechSynthesis.addEventListener?.('voiceschanged', refreshVoices);
 }
 
+// The Web Speech API has no gender field, so we prefer voices whose
+// names are known female voices across Windows/macOS/Chrome/Android.
+const FEMALE_NAME_HINTS = [
+  'female', 'zira', 'hazel', 'aria', 'jenny', 'michelle', 'sonia', 'libby',
+  'samantha', 'victoria', 'karen', 'moira', 'tessa', 'fiona', 'catherine',
+];
+
 function englishVoice() {
-  return voices.find((v) => v.lang && v.lang.startsWith('en')) || null;
+  const english = voices.filter((v) => v.lang && v.lang.startsWith('en'));
+  const female = english.find((v) =>
+    FEMALE_NAME_HINTS.some((hint) => v.name.toLowerCase().includes(hint))
+  );
+  return female || english[0] || null;
 }
 
 export function isSpeechAvailable() {
