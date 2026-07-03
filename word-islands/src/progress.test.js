@@ -117,4 +117,9 @@ describe('isIslandUnlocked', () => {
     const next = recordResult(state, profile.id, 'animals', 1, '🦁');
     expect(isIslandUnlocked(next.profiles[0], 1, ISLANDS)).toBe(false);
   });
+
+  it('returns false (not a crash) for an out-of-range index', () => {
+    const { profile } = createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
+    expect(isIslandUnlocked(profile, ISLANDS.length + 1, ISLANDS)).toBe(false);
+  });
 });

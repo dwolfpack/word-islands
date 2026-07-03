@@ -59,5 +59,6 @@ export function recordResult(state, profileId, islandId, stars, creature) {
 export function isIslandUnlocked(profile, index, islands) {
   if (index === 0) return true;
   const prev = islands[index - 1];
+  if (!prev) return false;
   return (profile.islands[prev.id]?.stars || 0) >= 2;
 }
