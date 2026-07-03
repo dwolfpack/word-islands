@@ -24,6 +24,7 @@ export const STRINGS = {
     tryAgain: 'Try again!',
     greatJob: 'Great job!',
     youEarned: 'You earned a new friend for your sticker book!',
+    watchVideo: 'Funny video!',
   },
   he: {
     title: 'איי המילים',
@@ -47,6 +48,7 @@ export const STRINGS = {
     tryAgain: 'נסו שוב!',
     greatJob: 'כל הכבוד!',
     youEarned: 'הרווחתם חבר חדש לאלבום המדבקות!',
+    watchVideo: 'סרטון מצחיק!',
   },
 };
 
