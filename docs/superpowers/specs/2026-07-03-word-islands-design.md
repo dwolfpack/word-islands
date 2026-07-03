@@ -73,6 +73,10 @@ Both paths: Animals, Colors, Food, My Home, Body, Clothes. The 8–10 path uses 
 - **Vitest** unit tests for `progress.js` (star scoring, unlock rules, save/load round-trip, corrupt-data fallback) and game logic helpers (answer shuffling, pair generation).
 - Manual browser verification of the full flow in both languages and both paths.
 
+## Funny videos (added 2026-07-03 during implementation)
+
+Any word may carry an optional `video` field (YouTube URL or bare video id). When present, its flashcard shows a "Funny video!" button that opens the video in an overlay using a privacy-friendly `youtube-nocookie` embed. Animal words on both paths ship with empty `video` slots for Dror to fill with vetted links; empty or unrecognized values show no button. Parsing lives in `src/video.js` (unit-tested).
+
 ## Out of scope (YAGNI)
 
 - Accounts / cross-device sync
