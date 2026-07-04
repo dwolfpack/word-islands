@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { t } from '../i18n.js';
 import { makePairs } from '../gameLogic.js';
 import { speak } from '../speech.js';
@@ -10,6 +10,10 @@ export default function MemoryMatch({ words, lang, mode, onDone }) {
   const [flipped, setFlipped] = useState([]); // up to 2 card ids currently face up
   const [matched, setMatched] = useState([]); // matched wordIds
   const [busy, setBusy] = useState(false); // true while a wrong pair is showing
+  const timeoutRef = useRef(null);
+
+  // Cancel any pending reveal/finish timer if the player exits mid-game.
+  useEffect(() => () => clearTimeout(timeoutRef.current), []);
 
   const flip = (card) => {
     if (busy || flipped.includes(card.id) || matched.includes(card.wordId)) return;
@@ -23,10 +27,10 @@ export default function MemoryMatch({ words, lang, mode, onDone }) {
         const nowMatched = [...matched, a.wordId];
         setMatched(nowMatched);
         setFlipped([]);
-        if (nowMatched.length === PAIR_COUNT) setTimeout(onDone, 900);
+        if (nowMatched.length === PAIR_COUNT) timeoutRef.current = setTimeout(onDone, 900);
       } else {
         setBusy(true);
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           setFlipped([]);
           setBusy(false);
         }, 900);
