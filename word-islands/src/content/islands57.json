@@ -363,5 +363,56 @@
         "emoji": "8️⃣"
       }
     ]
+  },
+  {
+    "id": "weather",
+    "icon": "🌦️",
+    "name": {
+      "en": "Weather Island",
+      "he": "אי מזג האוויר"
+    },
+    "creature": "🐨",
+    "words": [
+      {
+        "english": "sun",
+        "hebrew": "שמש",
+        "emoji": "☀️"
+      },
+      {
+        "english": "rain",
+        "hebrew": "גשם",
+        "emoji": "🌧️"
+      },
+      {
+        "english": "cloud",
+        "hebrew": "ענן",
+        "emoji": "☁️"
+      },
+      {
+        "english": "wind",
+        "hebrew": "רוח",
+        "emoji": "🌬️"
+      },
+      {
+        "english": "snow",
+        "hebrew": "שלג",
+        "emoji": "❄️"
+      },
+      {
+        "english": "storm",
+        "hebrew": "סערה",
+        "emoji": "⛈️"
+      },
+      {
+        "english": "fog",
+        "hebrew": "ערפל",
+        "emoji": "🌫️"
+      },
+      {
+        "english": "ice",
+        "hebrew": "קרח",
+        "emoji": "🧊"
+      }
+    ]
   }
 ]
