@@ -34,11 +34,11 @@ The video-link feature (`videoEmbedUrl` in `src/video.js`) already exists and is
 **Tone fix (Body Island, 8–10 path):** replace the "skull"/💀/גולגולת entry with "shoulder"/כתף/🤷 (or a comparable neutral body word), keeping its position in the list so word count stays at 10.
 
 **New islands** — Claude drafts word lists (English/Hebrew/emoji, verified for accuracy the same way the original 12 island lists were reviewed) for:
-- **Numbers** — counting words (one–eight for 5–7, one–ten for 8–10), icon 🔢, creature 🦔 (hedgehog).
-- **Weather** — sun, rain, cloud, wind, snow, etc., icon ☀️, creature 🐨 (koala).
-- **Family** — mom, dad, sister, brother, grandma, grandpa, baby, etc., icon 👪, creature 🦭 (seal).
+- **Numbers** — counting words (one–eight for 5–7, one–ten for 8–10), icon 🔢, creature 🦔 (hedgehog) on the 5–7 path / 🦫 (beaver) on the 8–10 path.
+- **Weather** — sun, rain, cloud, wind, snow, etc., icon 🌦️, creature 🐨 (koala) on the 5–7 path / 🦦 (otter) on the 8–10 path.
+- **Family** — mom, dad, sister, brother, grandma, grandpa, baby, etc., icon 👨‍👩‍👧‍👦, creature 🦭 (seal) on the 5–7 path / 🐿️ (chipmunk) on the 8–10 path.
 
-All three creature emoji were checked against every existing island's `creature` field (`🦁 🦜 🐸 🐢 🦉 🐬 🐉 🦚 🦊 🦥 🦖 🧜`) and confirmed unused; the content-shape test enforces this invariant going forward so any future collision fails immediately rather than shipping.
+Every existing theme already uses a *different* creature per age-path file (e.g. `animals` is 🦁 in `islands57.json` and 🐉 in `islands810.json`), so each new island follows the same pattern rather than sharing one creature across both files. All six new creature emoji were checked against every existing island's `creature` field (`🦁 🦜 🐸 🐢 🦉 🐬 🐉 🦚 🦊 🦥 🦖 🧜`) and against each other, and confirmed unused; the content-shape test enforces this invariant going forward so any future collision fails immediately rather than shipping.
 
 ## Video-link workflow
 
