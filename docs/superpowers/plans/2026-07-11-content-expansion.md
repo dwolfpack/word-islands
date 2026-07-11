@@ -162,7 +162,7 @@ git commit -m "content(word-islands): replace skull with shoulder in 8-10 Body I
 
 **Interfaces:**
 - Consumes: Task 1's `contentShape.test.js`.
-- Produces: a new island with `id: "numbers"`, `creature: "🦔"` — Task 4 appends after this one, so its anchor is this task's exact output.
+- Produces: a new island with `id: "numbers"`, `creature: "🦔"` in `islands57.json` and `creature: "🦫"` in `islands810.json` (every existing theme uses a *different* creature per age-path file — e.g. `animals` is 🦁 in `islands57.json` and 🐉 in `islands810.json` — so Numbers follows the same pattern) — Task 4 appends after this one, so its anchor is this task's exact output.
 
 - [ ] **Step 1: Append the Numbers island to `islands57.json`**
 
@@ -275,7 +275,7 @@ Replace it with:
       "en": "Number Island",
       "he": "אי המספרים"
     },
-    "creature": "🦔",
+    "creature": "🦫",
     "words": [
       {
         "english": "one",
@@ -338,7 +338,7 @@ Replace it with:
 cd word-islands && npm test && npm run build
 ```
 
-Expected: all tests pass (7 islands now, both files respect their word-count invariant, 🦔 doesn't collide with any existing creature: `🦁 🦜 🐸 🐢 🦉 🐬 🐉 🦚 🦊 🦥 🦖 🧜`); build succeeds.
+Expected: all tests pass (7 islands now, both files respect their word-count invariant, 🦔 and 🦫 don't collide with any existing creature: `🦁 🦜 🐸 🐢 🦉 🐬 🐉 🦚 🦊 🦥 🦖 🧜`, or with each other); build succeeds.
 
 - [ ] **Step 4: Manual spot-check in the browser**
 
@@ -373,7 +373,7 @@ git commit -m "content(word-islands): add Numbers island"
 
 **Interfaces:**
 - Consumes: Task 3's output (this task's anchor is the Numbers island just appended).
-- Produces: a new island with `id: "weather"`, `creature: "🐨"` — Task 5 appends after this one.
+- Produces: a new island with `id: "weather"`, `creature: "🐨"` in `islands57.json` and `creature: "🦦"` in `islands810.json` (same different-creature-per-file pattern as every existing island) — Task 5 appends after this one.
 
 - [ ] **Step 1: Append the Weather island to `islands57.json`**
 
@@ -486,7 +486,7 @@ Replace it with:
       "en": "Weather Island",
       "he": "אי מזג האוויר"
     },
-    "creature": "🐨",
+    "creature": "🦦",
     "words": [
       {
         "english": "sun",
@@ -549,7 +549,7 @@ Replace it with:
 cd word-islands && npm test && npm run build
 ```
 
-Expected: all tests pass (8 islands now; 🐨 doesn't collide with any existing creature including 🦔 from Task 3); build succeeds.
+Expected: all tests pass (8 islands now; 🐨 and 🦦 don't collide with any existing creature including 🦔/🦫 from Task 3, or with each other); build succeeds.
 
 - [ ] **Step 4: Manual spot-check in the browser**
 
@@ -584,7 +584,7 @@ git commit -m "content(word-islands): add Weather island"
 
 **Interfaces:**
 - Consumes: Task 4's output (this task's anchor is the Weather island just appended).
-- Produces: a new island with `id: "family"`, `creature: "🦭"`. This is the last new island in this plan.
+- Produces: a new island with `id: "family"`, `creature: "🦭"` in `islands57.json` and `creature: "🐿️"` in `islands810.json` (same different-creature-per-file pattern). This is the last new island in this plan.
 
 - [ ] **Step 1: Append the Family island to `islands57.json`**
 
@@ -697,7 +697,7 @@ Replace it with:
       "en": "Family Island",
       "he": "אי המשפחה"
     },
-    "creature": "🦭",
+    "creature": "🐿️",
     "words": [
       {
         "english": "mom",
@@ -760,7 +760,7 @@ Replace it with:
 cd word-islands && npm test && npm run build
 ```
 
-Expected: all tests pass (9 islands now; 🦭 doesn't collide with any existing creature); build succeeds.
+Expected: all tests pass (9 islands now; 🦭 and 🐿️ don't collide with any existing creature or each other); build succeeds.
 
 - [ ] **Step 4: Manual spot-check in the browser**
 
