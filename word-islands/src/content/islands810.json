@@ -374,5 +374,66 @@
         "emoji": "🎒"
       }
     ]
+  },
+  {
+    "id": "numbers",
+    "icon": "🔢",
+    "name": {
+      "en": "Number Island",
+      "he": "אי המספרים"
+    },
+    "creature": "🦫",
+    "words": [
+      {
+        "english": "one",
+        "hebrew": "אחד",
+        "emoji": "1️⃣"
+      },
+      {
+        "english": "two",
+        "hebrew": "שתיים",
+        "emoji": "2️⃣"
+      },
+      {
+        "english": "three",
+        "hebrew": "שלוש",
+        "emoji": "3️⃣"
+      },
+      {
+        "english": "four",
+        "hebrew": "ארבע",
+        "emoji": "4️⃣"
+      },
+      {
+        "english": "five",
+        "hebrew": "חמש",
+        "emoji": "5️⃣"
+      },
+      {
+        "english": "six",
+        "hebrew": "שש",
+        "emoji": "6️⃣"
+      },
+      {
+        "english": "seven",
+        "hebrew": "שבע",
+        "emoji": "7️⃣"
+      },
+      {
+        "english": "eight",
+        "hebrew": "שמונה",
+        "emoji": "8️⃣"
+      },
+      {
+        "english": "nine",
+        "hebrew": "תשע",
+        "emoji": "9️⃣"
+      },
+      {
+        "english": "ten",
+        "hebrew": "עשר",
+        "emoji": "🔟"
+      }
+    ]
   }
 ]
