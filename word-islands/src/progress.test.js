@@ -5,6 +5,7 @@ import {
   createProfile,
   recordResult,
   isIslandUnlocked,
+  deleteProfile,
 } from './progress.js';
 
 function fakeStorage(initial = {}) {
@@ -20,7 +21,7 @@ const ISLANDS = [{ id: 'animals' }, { id: 'colors' }, { id: 'food' }];
 describe('loadState', () => {
   it('returns default state when storage is empty', () => {
     const s = loadState(fakeStorage());
-    expect(s).toEqual({ profiles: [], activeProfileId: null, uiLang: 'en' });
+    expect(s).toEqual({ profiles: [], activeProfileId: null, uiLang: 'en', soundOn: true });
   });
 
   it('round-trips through saveState', () => {
@@ -36,7 +37,7 @@ describe('loadState', () => {
 
   it('falls back to default state on corrupt JSON', () => {
     const s = loadState(fakeStorage({ wordIslands: '{not json!!' }));
-    expect(s).toEqual({ profiles: [], activeProfileId: null, uiLang: 'en' });
+    expect(s).toEqual({ profiles: [], activeProfileId: null, uiLang: 'en', soundOn: true });
   });
 
   it('falls back to default state when profiles is not an array', () => {
@@ -121,5 +122,40 @@ describe('isIslandUnlocked', () => {
   it('returns false (not a crash) for an out-of-range index', () => {
     const { profile } = createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
     expect(isIslandUnlocked(profile, ISLANDS.length + 1, ISLANDS)).toBe(false);
+  });
+});
+
+describe('deleteProfile', () => {
+  it('removes the target profile', () => {
+    const a = createProfile(loadState(fakeStorage()), { name: 'A', avatar: '🦊', path: '5-7' });
+    const b = createProfile(a.state, { name: 'B', avatar: '🐼', path: '5-7' });
+    const next = deleteProfile(b.state, a.profile.id);
+    expect(next.profiles).toHaveLength(1);
+    expect(next.profiles[0].id).toBe(b.profile.id);
+  });
+
+  it('clears activeProfileId when the deleted profile was active', () => {
+    const { state, profile } = createProfile(loadState(fakeStorage()), {
+      name: 'A',
+      avatar: '🦊',
+      path: '5-7',
+    });
+    expect(state.activeProfileId).toBe(profile.id);
+    const next = deleteProfile(state, profile.id);
+    expect(next.activeProfileId).toBeNull();
+  });
+
+  it('leaves activeProfileId untouched when a different profile is deleted', () => {
+    const a = createProfile(loadState(fakeStorage()), { name: 'A', avatar: '🦊', path: '5-7' });
+    const b = createProfile(a.state, { name: 'B', avatar: '🐼', path: '5-7' });
+    const next = deleteProfile(b.state, a.profile.id);
+    expect(next.activeProfileId).toBe(b.profile.id);
+  });
+
+  it('is a no-op for an unknown profile id', () => {
+    const { state } = createProfile(loadState(fakeStorage()), { name: 'A', avatar: '🦊', path: '5-7' });
+    const next = deleteProfile(state, 'no-such-id');
+    expect(next.profiles).toHaveLength(1);
+    expect(next.activeProfileId).toBe(state.activeProfileId);
   });
 });
