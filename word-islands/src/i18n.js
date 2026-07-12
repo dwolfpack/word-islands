@@ -25,6 +25,8 @@ export const STRINGS = {
     greatJob: 'Great job!',
     youEarned: 'You earned a new friend for your sticker book!',
     watchVideo: 'Funny video!',
+    deleteProfile: 'Delete profile',
+    confirmDeleteProfile: "This can't be undone — all progress will be lost.",
   },
   he: {
     title: 'איי המילים',
@@ -49,6 +51,8 @@ export const STRINGS = {
     greatJob: 'כל הכבוד!',
     youEarned: 'הרווחתם חבר חדש לאלבום המדבקות!',
     watchVideo: 'סרטון מצחיק!',
+    deleteProfile: 'מחיקת פרופיל',
+    confirmDeleteProfile: 'לא ניתן לבטל פעולה זו — כל ההתקדמות תימחק.',
   },
 };
 
