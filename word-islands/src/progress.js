@@ -5,7 +5,7 @@
 const STORAGE_KEY = 'wordIslands';
 
 function defaultState() {
-  return { profiles: [], activeProfileId: null, uiLang: 'en' };
+  return { profiles: [], activeProfileId: null, uiLang: 'en', soundOn: true };
 }
 
 export function loadState(storage = globalThis.localStorage) {
@@ -52,6 +52,16 @@ export function recordResult(state, profileId, islandId, stars, creature) {
         creatures,
       };
     }),
+  };
+}
+
+// Permanently removes a profile and its progress. If it was the active
+// profile, clears activeProfileId so the app falls back to the picker.
+export function deleteProfile(state, profileId) {
+  return {
+    ...state,
+    profiles: state.profiles.filter((p) => p.id !== profileId),
+    activeProfileId: state.activeProfileId === profileId ? null : state.activeProfileId,
   };
 }
 
