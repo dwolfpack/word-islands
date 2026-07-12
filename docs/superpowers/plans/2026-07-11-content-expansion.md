@@ -200,7 +200,7 @@ Replace it with:
     "words": [
       {
         "english": "one",
-        "hebrew": "אחד",
+        "hebrew": "אחת",
         "emoji": "1️⃣"
       },
       {
@@ -279,7 +279,7 @@ Replace it with:
     "words": [
       {
         "english": "one",
-        "hebrew": "אחד",
+        "hebrew": "אחת",
         "emoji": "1️⃣"
       },
       {
