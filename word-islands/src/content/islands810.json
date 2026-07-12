@@ -496,5 +496,66 @@
         "emoji": "☂️"
       }
     ]
+  },
+  {
+    "id": "family",
+    "icon": "👨‍👩‍👧‍👦",
+    "name": {
+      "en": "Family Island",
+      "he": "אי המשפחה"
+    },
+    "creature": "🐿️",
+    "words": [
+      {
+        "english": "mom",
+        "hebrew": "אמא",
+        "emoji": "👩"
+      },
+      {
+        "english": "dad",
+        "hebrew": "אבא",
+        "emoji": "👨"
+      },
+      {
+        "english": "sister",
+        "hebrew": "אחות",
+        "emoji": "👧"
+      },
+      {
+        "english": "brother",
+        "hebrew": "אח",
+        "emoji": "👦"
+      },
+      {
+        "english": "baby",
+        "hebrew": "תינוק",
+        "emoji": "👶"
+      },
+      {
+        "english": "grandma",
+        "hebrew": "סבתא",
+        "emoji": "👵"
+      },
+      {
+        "english": "grandpa",
+        "hebrew": "סבא",
+        "emoji": "👴"
+      },
+      {
+        "english": "friend",
+        "hebrew": "חבר",
+        "emoji": "🧑‍🤝‍🧑"
+      },
+      {
+        "english": "family",
+        "hebrew": "משפחה",
+        "emoji": "👪"
+      },
+      {
+        "english": "cousin",
+        "hebrew": "בן דוד",
+        "emoji": "🧑"
+      }
+    ]
   }
 ]
