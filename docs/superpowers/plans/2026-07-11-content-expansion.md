@@ -745,9 +745,9 @@ Replace it with:
         "emoji": "👪"
       },
       {
-        "english": "twins",
-        "hebrew": "תאומים",
-        "emoji": "👯"
+        "english": "cousin",
+        "hebrew": "בן דוד",
+        "emoji": "🧑"
       }
     ]
   }
