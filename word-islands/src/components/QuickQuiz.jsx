@@ -2,10 +2,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { t } from '../i18n.js';
 import { shuffle, makeChoices } from '../gameLogic.js';
 import { speak, isSpeechAvailable } from '../speech.js';
+import { playCorrect, playIncorrect } from '../sound.js';
 
 const TIME_LIMIT = 10; // seconds per question, 8-10 path only
 
-export default function QuickQuiz({ words, lang, young, onDone }) {
+export default function QuickQuiz({ words, lang, young, soundOn, onDone }) {
   const order = useMemo(() => shuffle(words), [words]);
   const [round, setRound] = useState(0);
   const [answered, setAnswered] = useState(null); // null | 'right' | 'wrong' | 'timeout'
@@ -50,7 +51,12 @@ export default function QuickQuiz({ words, lang, young, onDone }) {
   const pick = (word) => {
     if (answered) return;
     const right = word.english === target.english;
-    if (right) correctRef.current += 1;
+    if (right) {
+      correctRef.current += 1;
+      playCorrect(soundOn);
+    } else {
+      playIncorrect(soundOn);
+    }
     setPickedId(word.english);
     setAnswered(right ? 'right' : 'wrong');
   };
