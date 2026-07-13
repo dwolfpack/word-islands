@@ -3,7 +3,7 @@ import { t } from '../i18n.js';
 
 const AVATARS = ['🦊', '🐼', '🐯', '🦄', '🐸', '🐙', '🦋', '🐳'];
 
-export default function ProfilePicker({ profiles, lang, onSelect, onCreate }) {
+export default function ProfilePicker({ profiles, lang, onSelect, onCreate, onDelete }) {
   const [creating, setCreating] = useState(profiles.length === 0);
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState(AVATARS[0]);
@@ -15,10 +15,22 @@ export default function ProfilePicker({ profiles, lang, onSelect, onCreate }) {
         <h2 className="instruction">{t(lang, 'chooseProfile')}</h2>
         <div className="profiles">
           {profiles.map((p) => (
-            <button key={p.id} className="profile-btn" onClick={() => onSelect(p.id)}>
-              <span className="avatar">{p.avatar}</span>
-              <span>{p.name}</span>
-            </button>
+            <div key={p.id} className="profile-card">
+              <button className="profile-btn" onClick={() => onSelect(p.id)}>
+                <span className="avatar">{p.avatar}</span>
+                <span>{p.name}</span>
+              </button>
+              <button
+                className="delete-icon"
+                title={t(lang, 'deleteProfile')}
+                onClick={() => {
+                  const message = `${t(lang, 'deleteProfile')} — ${p.name}?\n${t(lang, 'confirmDeleteProfile')}`;
+                  if (window.confirm(message)) onDelete(p.id);
+                }}
+              >
+                🗑️
+              </button>
+            </div>
           ))}
           <button className="profile-btn" onClick={() => setCreating(true)}>
             <span className="avatar">➕</span>
