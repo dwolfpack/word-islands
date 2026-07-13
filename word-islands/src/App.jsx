@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { loadState, saveState, createProfile, recordResult } from './progress.js';
+import { loadState, saveState, createProfile, recordResult, deleteProfile } from './progress.js';
+import { playCreatureUnlocked } from './sound.js';
 import { t } from './i18n.js';
 import { MANIFEST } from './content/manifest.js';
 import ProfilePicker from './components/ProfilePicker.jsx';
@@ -13,6 +14,7 @@ export default function App() {
   const [islandId, setIslandId] = useState(null);
 
   const lang = state.uiLang || 'en';
+  const soundOn = state.soundOn !== false;
   const update = (next) => {
     saveState(next);
     setState(next);
@@ -44,6 +46,9 @@ export default function App() {
           >
             {lang === 'en' ? 'עברית' : 'English'}
           </button>
+          <button className="chip" onClick={() => update({ ...state, soundOn: !soundOn })}>
+            {soundOn ? '🔊' : '🔇'}
+          </button>
         </div>
       </header>
       <main>
@@ -59,6 +64,7 @@ export default function App() {
               updateFn((prev) => createProfile(prev, info).state);
               setScreen('map');
             }}
+            onDelete={(id) => updateFn((prev) => deleteProfile(prev, id))}
           />
         )}
         {screen === 'map' && profile && (
@@ -78,9 +84,12 @@ export default function App() {
             island={island}
             path={profile.path}
             lang={lang}
-            onComplete={(stars, creature) =>
-              updateFn((prev) => recordResult(prev, profile.id, island.id, stars, creature))
-            }
+            soundOn={soundOn}
+            onComplete={(stars, creature) => {
+              const newCreature = stars >= 1 && !profile.creatures.includes(creature);
+              updateFn((prev) => recordResult(prev, profile.id, island.id, stars, creature));
+              if (newCreature) playCreatureUnlocked(soundOn);
+            }}
             onExit={() => setScreen('map')}
           />
         )}
