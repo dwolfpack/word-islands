@@ -2,10 +2,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { t } from '../i18n.js';
 import { makePairs } from '../gameLogic.js';
 import { speak } from '../speech.js';
+import { playCorrect, playIncorrect } from '../sound.js';
 
 const PAIR_COUNT = 6;
 
-export default function MemoryMatch({ words, lang, mode, onDone }) {
+export default function MemoryMatch({ words, lang, mode, soundOn, onDone }) {
   const cards = useMemo(() => makePairs(words, PAIR_COUNT, mode), [words, mode]);
   const [flipped, setFlipped] = useState([]); // up to 2 card ids currently face up
   const [matched, setMatched] = useState([]); // matched wordIds
@@ -23,12 +24,14 @@ export default function MemoryMatch({ words, lang, mode, onDone }) {
     if (next.length === 2) {
       const [a, b] = next.map((id) => cards.find((c) => c.id === id));
       if (a.wordId === b.wordId) {
+        playCorrect(soundOn);
         speak(a.word.english);
         const nowMatched = [...matched, a.wordId];
         setMatched(nowMatched);
         setFlipped([]);
         if (nowMatched.length === PAIR_COUNT) timeoutRef.current = setTimeout(onDone, 900);
       } else {
+        playIncorrect(soundOn);
         setBusy(true);
         timeoutRef.current = setTimeout(() => {
           setFlipped([]);
