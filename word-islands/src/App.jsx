@@ -88,7 +88,10 @@ export default function App() {
             onComplete={(stars, creature) => {
               const newCreature = stars >= 1 && !profile.creatures.includes(creature);
               updateFn((prev) => recordResult(prev, profile.id, island.id, stars, creature));
-              if (newCreature) playCreatureUnlocked(soundOn);
+              // Delay so this doesn't overlap playStars(), which Island.jsx's
+              // quiz onDone callback fires in the same tick and which plays
+              // out to ~0.51s from AudioContext.currentTime.
+              if (newCreature) setTimeout(() => playCreatureUnlocked(soundOn), 550);
             }}
             onExit={() => setScreen('map')}
           />

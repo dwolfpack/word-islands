@@ -149,6 +149,21 @@ Two things worth knowing if you touch this content again:
 - Video links only exist on the **Animals** island by design — Numbers/
   Weather/Family intentionally don't get a `video` field.
 
+## Status: Track 2 (UX Polish) — ✅ COMPLETE, merged
+
+All 7 plan tasks are merged into `main`. One deliberate deviation from
+the original design spec, recorded here so a future session doesn't
+"restore" it thinking something was missed: the spec called for
+`sound.js` to export `isSoundEnabled()`/`setSoundEnabled()` accessors
+and for `progress.js`'s `recordResult` to return `{ state, newCreature
+}`. Both were simplified away during implementation — `soundOn` is
+read directly from app state (`state.soundOn !== false` in
+`App.jsx`), and `newCreature` is computed inline in `App.jsx`'s
+`onComplete` callback from the pre-update `profile` snapshot instead
+of changing `recordResult`'s return shape. This keeps `recordResult`
+backward compatible with its existing tests and avoids extra stateful
+accessors; it was reviewed and approved, not an oversight.
+
 ## What's next: two more tracks, not yet started
 
 These were identified in conversation but **never brainstormed into a
