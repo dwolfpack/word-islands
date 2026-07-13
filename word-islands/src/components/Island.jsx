@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { t } from '../i18n.js';
 import { starsForScore } from '../gameLogic.js';
+import { playStars } from '../sound.js';
 import Flashcards from './Flashcards.jsx';
 import TapTheRightOne from './TapTheRightOne.jsx';
 import MemoryMatch from './MemoryMatch.jsx';
 import QuickQuiz from './QuickQuiz.jsx';
 
-export default function Island({ island, path, lang, onComplete, onExit }) {
+export default function Island({ island, path, lang, soundOn, onComplete, onExit }) {
   const [phase, setPhase] = useState('learn'); // learn | tap | memory | quiz | reward
   const [stars, setStars] = useState(0);
   const young = path === '5-7';
@@ -28,6 +29,7 @@ export default function Island({ island, path, lang, onComplete, onExit }) {
           words={island.words}
           lang={lang}
           choiceCount={young ? 3 : 4}
+          soundOn={soundOn}
           onDone={() => setPhase('memory')}
         />
       )}
@@ -36,6 +38,7 @@ export default function Island({ island, path, lang, onComplete, onExit }) {
           words={island.words}
           lang={lang}
           mode={young ? 'emoji-emoji' : 'emoji-word'}
+          soundOn={soundOn}
           onDone={() => setPhase('quiz')}
         />
       )}
@@ -44,9 +47,11 @@ export default function Island({ island, path, lang, onComplete, onExit }) {
           words={island.words}
           lang={lang}
           young={young}
+          soundOn={soundOn}
           onDone={(correct, total) => {
             const earned = starsForScore(correct, total);
             setStars(earned);
+            playStars(soundOn);
             onComplete(earned, island.creature);
             setPhase('reward');
           }}
