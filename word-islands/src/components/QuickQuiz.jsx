@@ -14,7 +14,7 @@ export default function QuickQuiz({ words, lang, young, soundOn, onDone }) {
   const [timeLeft, setTimeLeft] = useState(TIME_LIMIT);
   const correctRef = useRef(0);
   const target = order[round];
-  const choices = useMemo(() => makeChoices(words, target, young ? 3 : 4), [words, target, young]);
+  const choices = useMemo(() => makeChoices(words, target, 4), [words, target]);
 
   // New question: reset the clock, speak the word for young players.
   useEffect(() => {
