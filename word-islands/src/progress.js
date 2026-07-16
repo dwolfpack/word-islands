@@ -64,11 +64,3 @@ export function deleteProfile(state, profileId) {
     activeProfileId: state.activeProfileId === profileId ? null : state.activeProfileId,
   };
 }
-
-// Island 0 is always open; each next island needs 2+ stars on the previous one.
-export function isIslandUnlocked(profile, index, islands) {
-  if (index === 0) return true;
-  const prev = islands[index - 1];
-  if (!prev) return false;
-  return (profile.islands[prev.id]?.stars || 0) >= 2;
-}
