@@ -4,7 +4,6 @@ import {
   saveState,
   createProfile,
   recordResult,
-  isIslandUnlocked,
   deleteProfile,
 } from './progress.js';
 
@@ -15,8 +14,6 @@ function fakeStorage(initial = {}) {
     setItem: (k, v) => map.set(k, String(v)),
   };
 }
-
-const ISLANDS = [{ id: 'animals' }, { id: 'colors' }, { id: 'food' }];
 
 describe('loadState', () => {
   it('returns default state when storage is empty', () => {
@@ -97,31 +94,6 @@ describe('recordResult', () => {
     const next = recordResult(b.state, b.profile.id, 'animals', 2, '🦁');
     const profileA = next.profiles.find((p) => p.id === a.profile.id);
     expect(profileA.islands).toEqual({});
-  });
-});
-
-describe('isIslandUnlocked', () => {
-  it('always unlocks the first island', () => {
-    const { profile } = createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
-    expect(isIslandUnlocked(profile, 0, ISLANDS)).toBe(true);
-  });
-
-  it('unlocks the next island when the previous has 2+ stars', () => {
-    const { state, profile } = createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
-    const next = recordResult(state, profile.id, 'animals', 2, '🦁');
-    expect(isIslandUnlocked(next.profiles[0], 1, ISLANDS)).toBe(true);
-    expect(isIslandUnlocked(next.profiles[0], 2, ISLANDS)).toBe(false);
-  });
-
-  it('keeps the next island locked with fewer than 2 stars', () => {
-    const { state, profile } = createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
-    const next = recordResult(state, profile.id, 'animals', 1, '🦁');
-    expect(isIslandUnlocked(next.profiles[0], 1, ISLANDS)).toBe(false);
-  });
-
-  it('returns false (not a crash) for an out-of-range index', () => {
-    const { profile } = createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
-    expect(isIslandUnlocked(profile, ISLANDS.length + 1, ISLANDS)).toBe(false);
   });
 });
 

@@ -8,7 +8,6 @@
   --green: #4caf50;
   --red: #ef5350;
   --text: #29405b;
-  --locked: #b9c7d4;
   --radius: 18px;
 }
 
@@ -71,7 +70,6 @@ button:disabled { cursor: default; opacity: 0.7; }
   padding: 22px 10px; font-size: 1.1rem;
 }
 .island-tile .island-icon { font-size: 3.2rem; }
-.island-tile.locked { background: var(--locked); }
 .island-stars { letter-spacing: 3px; }
 
 /* Flashcards */
