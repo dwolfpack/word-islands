@@ -15,7 +15,7 @@ export default function Island({ island, path, lang, soundOn, onComplete, onExit
   return (
     <div className="island">
       <div className="island-header">
-        <button onClick={onExit}>← {t(lang, 'back')}</button>
+        <button onClick={onExit}>{lang === 'he' ? '→' : '←'} {t(lang, 'back')}</button>
         <h2>
           {island.icon} {island.name[lang]}
         </h2>
@@ -28,7 +28,7 @@ export default function Island({ island, path, lang, soundOn, onComplete, onExit
         <TapTheRightOne
           words={island.words}
           lang={lang}
-          choiceCount={young ? 3 : 4}
+          choiceCount={4}
           soundOn={soundOn}
           onDone={() => setPhase('memory')}
         />

@@ -3,7 +3,7 @@ import { t } from '../i18n.js';
 export default function StickerBook({ profile, islands, lang, onBack }) {
   return (
     <div className="sticker-book">
-      <button onClick={onBack}>← {t(lang, 'back')}</button>
+      <button onClick={onBack}>{lang === 'he' ? '→' : '←'} {t(lang, 'back')}</button>
       <h2>
         📖 {t(lang, 'stickerBook')} — {profile.avatar} {profile.name}
       </h2>
