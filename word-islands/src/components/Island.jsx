@@ -61,7 +61,19 @@ export default function Island({ island, path, lang, soundOn, onComplete, onExit
       {phase === 'reward' && (
         <div className="reward">
           <Celebration />
-          <div className="reward-stars">{'⭐'.repeat(stars)}</div>
+          <div className="reward-stars">
+            {[0, 1, 2].map((i) =>
+              i < stars ? (
+                <span key={i} className="reward-star filled" style={{ '--d': `${i * 0.13}s` }}>
+                  ⭐
+                </span>
+              ) : (
+                <span key={i} className="reward-star empty">
+                  ☆
+                </span>
+              )
+            )}
+          </div>
           <div className="reward-creature">{island.creature}</div>
           <h2>{t(lang, 'greatJob')}</h2>
           <p>{t(lang, 'youEarned')}</p>
