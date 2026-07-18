@@ -8,10 +8,26 @@ import MemoryMatch from './MemoryMatch.jsx';
 import QuickQuiz from './QuickQuiz.jsx';
 import Celebration from './Celebration.jsx';
 
-export default function Island({ island, path, lang, soundOn, onComplete, onExit }) {
+export default function Island({
+  island,
+  path,
+  lang,
+  soundOn,
+  collectedCount,
+  totalCreatures,
+  onComplete,
+  onExit,
+}) {
   const [phase, setPhase] = useState('learn'); // learn | tap | memory | quiz | reward
   const [stars, setStars] = useState(0);
+  const [isNewCreature, setIsNewCreature] = useState(false);
   const young = path === '5-7';
+
+  const playAgain = () => {
+    setStars(0);
+    setIsNewCreature(false);
+    setPhase('learn');
+  };
 
   return (
     <div className="island">
@@ -53,7 +69,8 @@ export default function Island({ island, path, lang, soundOn, onComplete, onExit
             const earned = starsForScore(correct, total);
             setStars(earned);
             playStars(soundOn);
-            onComplete(earned, island.creature);
+            const isNew = onComplete(earned, island.creature);
+            setIsNewCreature(Boolean(isNew));
             setPhase('reward');
           }}
         />
@@ -74,12 +91,31 @@ export default function Island({ island, path, lang, soundOn, onComplete, onExit
               )
             )}
           </div>
-          <div className="reward-creature">{island.creature}</div>
-          <h2>{t(lang, 'greatJob')}</h2>
-          <p>{t(lang, 'youEarned')}</p>
-          <button className="big-btn" onClick={onExit}>
-            {t(lang, 'backToMap')}
-          </button>
+          <div className="reward-creature-badge">
+            <span className="reward-creature">{island.creature}</span>
+            {isNewCreature && <span className="new-tag">{t(lang, 'newTag')}</span>}
+          </div>
+          <h2>{stars === 3 ? t(lang, 'perfect') : stars === 2 ? t(lang, 'greatJob') : t(lang, 'youDidIt')}</h2>
+          {isNewCreature && <p>{t(lang, 'youEarned')}</p>}
+          <div className="reward-progress">
+            <span className="reward-progress-label">
+              {t(lang, 'stickerBook')} {collectedCount} / {totalCreatures}
+            </span>
+            <div className="reward-progress-bar">
+              <div
+                className="reward-progress-fill"
+                style={{ width: `${totalCreatures ? (collectedCount / totalCreatures) * 100 : 0}%` }}
+              />
+            </div>
+          </div>
+          <div className="reward-actions">
+            <button className="big-btn" onClick={onExit}>
+              {t(lang, 'backToMap')}
+            </button>
+            <button className="secondary-btn" onClick={playAgain}>
+              {t(lang, 'playAgain')}
+            </button>
+          </div>
         </div>
       )}
     </div>

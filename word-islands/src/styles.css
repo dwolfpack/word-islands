@@ -138,9 +138,25 @@ button:disabled { cursor: default; opacity: 0.7; }
   60% { transform: scale(1.3); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
-.reward-creature { font-size: 7rem; margin: 18px 0; animation: pop 0.6s; }
+.reward-creature-badge {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  width: 160px; height: 160px; margin: 18px auto; background: var(--card);
+  border-radius: 50%; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+.reward-creature { font-size: 6rem; animation: pop 0.6s 0.4s both; }
 @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
-.reward .big-btn { margin-top: 20px; }
+.new-tag {
+  position: absolute; top: -6px; inset-inline-end: -6px; background: var(--accent);
+  color: #fff; font-size: 0.9rem; font-weight: bold; padding: 4px 10px; border-radius: 999px;
+}
+.reward-progress { margin: 16px auto 0; width: min(300px, 80vw); }
+.reward-progress-label { font-size: 1rem; color: var(--text); }
+.reward-progress-bar {
+  height: 10px; background: #fff; border-radius: 5px; overflow: hidden; margin-top: 6px;
+}
+.reward-progress-fill { height: 100%; background: var(--green); transition: width 0.6s ease; }
+.reward-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 22px; }
+.secondary-btn { background: var(--card); color: var(--text); }
 
 /* Sticker book */
 .sticker-book { text-align: center; }

@@ -85,6 +85,8 @@ export default function App() {
             path={profile.path}
             lang={lang}
             soundOn={soundOn}
+            collectedCount={profile.creatures.length}
+            totalCreatures={islands.length}
             onComplete={(stars, creature) => {
               const newCreature = stars >= 1 && !profile.creatures.includes(creature);
               updateFn((prev) => recordResult(prev, profile.id, island.id, stars, creature));
@@ -92,6 +94,7 @@ export default function App() {
               // quiz onDone callback fires in the same tick and which plays
               // out to ~0.51s from AudioContext.currentTime.
               if (newCreature) setTimeout(() => playCreatureUnlocked(soundOn), 550);
+              return newCreature;
             }}
             onExit={() => setScreen('map')}
           />
