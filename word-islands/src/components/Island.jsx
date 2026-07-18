@@ -6,6 +6,7 @@ import Flashcards from './Flashcards.jsx';
 import TapTheRightOne from './TapTheRightOne.jsx';
 import MemoryMatch from './MemoryMatch.jsx';
 import QuickQuiz from './QuickQuiz.jsx';
+import Celebration from './Celebration.jsx';
 
 export default function Island({ island, path, lang, soundOn, onComplete, onExit }) {
   const [phase, setPhase] = useState('learn'); // learn | tap | memory | quiz | reward
@@ -59,6 +60,7 @@ export default function Island({ island, path, lang, soundOn, onComplete, onExit
       )}
       {phase === 'reward' && (
         <div className="reward">
+          <Celebration />
           <div className="reward-stars">{'⭐'.repeat(stars)}</div>
           <div className="reward-creature">{island.creature}</div>
           <h2>{t(lang, 'greatJob')}</h2>
