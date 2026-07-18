@@ -130,7 +130,14 @@ button:disabled { cursor: default; opacity: 0.7; }
   15% { opacity: 1; }
   100% { transform: translateY(-380px); opacity: 0; }
 }
-.reward-stars { font-size: 3rem; letter-spacing: 8px; }
+.reward-stars { display: flex; justify-content: center; gap: 10px; font-size: 3rem; }
+.reward-star.empty { opacity: 0.35; }
+.reward-star.filled { display: inline-block; animation: star-pop 0.5s var(--d, 0s) both; }
+@keyframes star-pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
 .reward-creature { font-size: 7rem; margin: 18px 0; animation: pop 0.6s; }
 @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
 .reward .big-btn { margin-top: 20px; }
