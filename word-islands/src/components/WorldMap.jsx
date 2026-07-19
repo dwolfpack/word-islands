@@ -1,13 +1,24 @@
 import { t } from '../i18n.js';
 
-export default function WorldMap({ profile, islands, lang, onEnter, onStickers }) {
+export default function WorldMap({ profile, islands, lang, dueCount, onEnter, onStickers, onPractice }) {
   return (
     <div className="world-map">
       <div className="map-top">
         <h2>{t(lang, 'chooseIsland')}</h2>
-        <button onClick={onStickers}>
-          📖 {t(lang, 'stickerBook')} ({profile.creatures.length}/{islands.length})
-        </button>
+        <div className="map-top-buttons">
+          <button onClick={onStickers}>
+            📖 {t(lang, 'stickerBook')} ({profile.creatures.length}/{islands.length})
+          </button>
+          {dueCount > 0 ? (
+            <button className="practice-btn" onClick={onPractice}>
+              🔁 {t(lang, 'practice')} ({dueCount})
+            </button>
+          ) : (
+            <button className="practice-btn practice-done" disabled>
+              🔁 {t(lang, 'allCaughtUp')} 🌟
+            </button>
+          )}
+        </div>
       </div>
       <div className="islands">
         {islands.map((island) => {
