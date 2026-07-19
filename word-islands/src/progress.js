@@ -91,6 +91,38 @@ export function enterWordsForIsland(state, profileId, islandId, words, today) {
   };
 }
 
+// Keys of words due for review on or before `today`.
+export function dueReviews(profile, today) {
+  return Object.entries(profile.reviews || {})
+    .filter(([, v]) => v.due <= today)
+    .map(([k]) => k);
+}
+
+// The next practice session: up to `cap` due keys, lowest box first, then
+// earliest due first.
+export function buildSession(profile, today, cap = 10) {
+  const reviews = profile.reviews || {};
+  return dueReviews(profile, today)
+    .sort((a, b) => reviews[a].box - reviews[b].box || (reviews[a].due < reviews[b].due ? -1 : 1))
+    .slice(0, cap);
+}
+
+// Applies a practice answer: right promotes a box (capped at 5) and reschedules
+// by that box's interval; wrong resets to box 1, due tomorrow. No-op if untracked.
+export function recordReview(state, profileId, key, correct, today) {
+  return {
+    ...state,
+    profiles: state.profiles.map((p) => {
+      if (p.id !== profileId) return p;
+      const entry = (p.reviews || {})[key];
+      if (!entry) return p;
+      const box = correct ? Math.min(entry.box + 1, 5) : 1;
+      const due = correct ? addDays(today, REVIEW_INTERVALS[box]) : addDays(today, 1);
+      return { ...p, reviews: { ...p.reviews, [key]: { box, due } } };
+    }),
+  };
+}
+
 // Permanently removes a profile and its progress. If it was the active
 // profile, clears activeProfileId so the app falls back to the picker.
 export function deleteProfile(state, profileId) {

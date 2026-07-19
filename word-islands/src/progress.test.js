@@ -7,6 +7,9 @@ import {
   deleteProfile,
   todayStr,
   enterWordsForIsland,
+  dueReviews,
+  buildSession,
+  recordReview,
 } from './progress.js';
 
 function fakeStorage(initial = {}) {
@@ -181,5 +184,80 @@ describe('enterWordsForIsland', () => {
     const next = enterWordsForIsland(b.state, b.profile.id, 'animals', WORDS, '2026-07-04');
     const profileA = next.profiles.find((p) => p.id === a.profile.id);
     expect(profileA.reviews).toEqual({});
+  });
+});
+
+function profileWithReviews(reviews) {
+  const { state, profile } = createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
+  profile.reviews = reviews;
+  return { state, profile };
+}
+
+describe('dueReviews', () => {
+  it('returns only keys due on or before today', () => {
+    const { profile } = profileWithReviews({
+      'animals:dog': { box: 1, due: '2026-07-04' },
+      'animals:cat': { box: 2, due: '2026-07-10' },
+      'animals:fish': { box: 1, due: '2026-07-03' },
+    });
+    expect(dueReviews(profile, '2026-07-04').sort()).toEqual(['animals:dog', 'animals:fish']);
+  });
+
+  it('is empty when nothing is tracked', () => {
+    const { profile } = profileWithReviews({});
+    expect(dueReviews(profile, '2026-07-04')).toEqual([]);
+  });
+});
+
+describe('buildSession', () => {
+  it('orders by lowest box then earliest due, and caps the count', () => {
+    const reviews = {};
+    for (let i = 0; i < 12; i++) reviews[`animals:w${i}`] = { box: 1, due: '2026-07-01' };
+    reviews['animals:hi'] = { box: 3, due: '2026-06-01' }; // higher box, should come after box-1s
+    const { profile } = profileWithReviews(reviews);
+    const session = buildSession(profile, '2026-07-04', 10);
+    expect(session).toHaveLength(10);
+    expect(session).not.toContain('animals:hi'); // box-1 words fill the cap first
+  });
+
+  it('returns all due when fewer than the cap', () => {
+    const { profile } = profileWithReviews({
+      'animals:dog': { box: 2, due: '2026-07-02' },
+      'animals:cat': { box: 1, due: '2026-07-03' },
+    });
+    // cat (box 1) before dog (box 2)
+    expect(buildSession(profile, '2026-07-04', 10)).toEqual(['animals:cat', 'animals:dog']);
+  });
+});
+
+describe('recordReview', () => {
+  function stateWith(reviews) {
+    const { state, profile } = createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
+    profile.reviews = reviews;
+    return { state, profileId: profile.id };
+  }
+
+  it('promotes a correct answer and reschedules by the new box interval', () => {
+    const { state, profileId } = stateWith({ 'animals:dog': { box: 2, due: '2026-07-04' } });
+    const next = recordReview(state, profileId, 'animals:dog', true, '2026-07-04');
+    expect(next.profiles[0].reviews['animals:dog']).toEqual({ box: 3, due: '2026-07-08' }); // +4
+  });
+
+  it('keeps a correct box-5 answer at box 5, rescheduled +14', () => {
+    const { state, profileId } = stateWith({ 'animals:dog': { box: 5, due: '2026-07-04' } });
+    const next = recordReview(state, profileId, 'animals:dog', true, '2026-07-04');
+    expect(next.profiles[0].reviews['animals:dog']).toEqual({ box: 5, due: '2026-07-18' }); // +14
+  });
+
+  it('resets a wrong answer to box 1, due tomorrow', () => {
+    const { state, profileId } = stateWith({ 'animals:dog': { box: 4, due: '2026-07-04' } });
+    const next = recordReview(state, profileId, 'animals:dog', false, '2026-07-04');
+    expect(next.profiles[0].reviews['animals:dog']).toEqual({ box: 1, due: '2026-07-05' }); // +1
+  });
+
+  it('is a no-op for an untracked key', () => {
+    const { state, profileId } = stateWith({ 'animals:dog': { box: 1, due: '2026-07-04' } });
+    const next = recordReview(state, profileId, 'animals:nope', true, '2026-07-04');
+    expect(next.profiles[0].reviews).toEqual({ 'animals:dog': { box: 1, due: '2026-07-04' } });
   });
 });
