@@ -5,6 +5,8 @@ import {
   createProfile,
   recordResult,
   deleteProfile,
+  todayStr,
+  enterWordsForIsland,
 } from './progress.js';
 
 function fakeStorage(initial = {}) {
@@ -129,5 +131,55 @@ describe('deleteProfile', () => {
     const next = deleteProfile(state, 'no-such-id');
     expect(next.profiles).toHaveLength(1);
     expect(next.activeProfileId).toBe(state.activeProfileId);
+  });
+});
+
+describe('createProfile reviews', () => {
+  it('seeds an empty reviews map on new profiles', () => {
+    const { profile } = createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
+    expect(profile.reviews).toEqual({});
+  });
+});
+
+describe('todayStr', () => {
+  it('formats a date as local YYYY-MM-DD', () => {
+    expect(todayStr(new Date(2026, 6, 4))).toBe('2026-07-04');
+    expect(todayStr(new Date(2026, 11, 31))).toBe('2026-12-31');
+  });
+});
+
+describe('enterWordsForIsland', () => {
+  const WORDS = [
+    { english: 'dog', hebrew: 'כלב', emoji: '🐶' },
+    { english: 'cat', hebrew: 'חתול', emoji: '🐱' },
+  ];
+  function seeded() {
+    return createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
+  }
+
+  it('adds untracked island words at box 1, due today', () => {
+    const { state, profile } = seeded();
+    const next = enterWordsForIsland(state, profile.id, 'animals', WORDS, '2026-07-04');
+    expect(next.profiles[0].reviews).toEqual({
+      'animals:dog': { box: 1, due: '2026-07-04' },
+      'animals:cat': { box: 1, due: '2026-07-04' },
+    });
+  });
+
+  it('does not reset words already tracked', () => {
+    const { state, profile } = seeded();
+    let next = enterWordsForIsland(state, profile.id, 'animals', WORDS, '2026-07-04');
+    next.profiles[0].reviews['animals:dog'] = { box: 3, due: '2026-07-20' };
+    const again = enterWordsForIsland(next, profile.id, 'animals', WORDS, '2026-07-10');
+    expect(again.profiles[0].reviews['animals:dog']).toEqual({ box: 3, due: '2026-07-20' });
+    expect(again.profiles[0].reviews['animals:cat']).toEqual({ box: 1, due: '2026-07-04' });
+  });
+
+  it('does not modify other profiles', () => {
+    const a = createProfile(loadState(fakeStorage()), { name: 'A', avatar: '🦊', path: '5-7' });
+    const b = createProfile(a.state, { name: 'B', avatar: '🐼', path: '5-7' });
+    const next = enterWordsForIsland(b.state, b.profile.id, 'animals', WORDS, '2026-07-04');
+    const profileA = next.profiles.find((p) => p.id === a.profile.id);
+    expect(profileA.reviews).toEqual({});
   });
 });
