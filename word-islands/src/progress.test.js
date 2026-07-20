@@ -7,6 +7,7 @@ import {
   deleteProfile,
   todayStr,
   enterWordsForIsland,
+  backfillReviews,
   dueReviews,
   buildSession,
   recordReview,
@@ -184,6 +185,46 @@ describe('enterWordsForIsland', () => {
     const next = enterWordsForIsland(b.state, b.profile.id, 'animals', WORDS, '2026-07-04');
     const profileA = next.profiles.find((p) => p.id === a.profile.id);
     expect(profileA.reviews).toEqual({});
+  });
+});
+
+describe('backfillReviews', () => {
+  const ISLANDS = [
+    { id: 'animals', words: [{ english: 'dog', hebrew: 'כלב', emoji: '🐶' }] },
+    { id: 'colors', words: [{ english: 'red', hebrew: 'אדום', emoji: '🔴' }] },
+  ];
+  function seeded() {
+    return createProfile(loadState(fakeStorage()), { name: 'N', avatar: '🦊', path: '5-7' });
+  }
+
+  it('enters words for islands the profile has completed', () => {
+    const { state, profile } = seeded();
+    const withIsland = recordResult(state, profile.id, 'animals', 2, '🦁');
+    const next = backfillReviews(withIsland, profile.id, ISLANDS, '2026-07-20');
+    expect(next.profiles[0].reviews).toEqual({
+      'animals:dog': { box: 1, due: '2026-07-20' },
+    });
+  });
+
+  it('does not enter words for islands the profile has not completed', () => {
+    const { state, profile } = seeded();
+    const next = backfillReviews(state, profile.id, ISLANDS, '2026-07-20');
+    expect(next.profiles[0].reviews).toEqual({});
+  });
+
+  it('does not reset already-tracked words', () => {
+    const { state, profile } = seeded();
+    let withIsland = recordResult(state, profile.id, 'animals', 2, '🦁');
+    withIsland = enterWordsForIsland(withIsland, profile.id, 'animals', ISLANDS[0].words, '2026-07-01');
+    withIsland.profiles[0].reviews['animals:dog'] = { box: 3, due: '2026-07-25' };
+    const next = backfillReviews(withIsland, profile.id, ISLANDS, '2026-07-20');
+    expect(next.profiles[0].reviews['animals:dog']).toEqual({ box: 3, due: '2026-07-25' });
+  });
+
+  it('returns state unchanged for an unknown profile id', () => {
+    const { state } = seeded();
+    const next = backfillReviews(state, 'no-such-id', ISLANDS, '2026-07-20');
+    expect(next).toBe(state);
   });
 });
 

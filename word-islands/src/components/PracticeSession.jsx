@@ -63,11 +63,12 @@ export default function PracticeSession({ entries, pool, lang, young, soundOn, o
         <Celebration />
         <h2>{t(lang, 'greatJob')}</h2>
         <p>
-          {t(lang, 'youPracticed')} {entries.length} {t(lang, 'wordsWord')} 🌟
+          {t(lang, 'youPracticed')} {entries.length}{' '}
+          {t(lang, entries.length === 1 ? 'wordWord' : 'wordsWord')} 🌟
         </p>
         {movedUp > 0 && (
           <p>
-            {movedUp} {t(lang, 'movedUp')}
+            {movedUp} {t(lang, movedUp === 1 ? 'movedUpOne' : 'movedUp')}
           </p>
         )}
         <div className="reward-actions">
@@ -81,6 +82,9 @@ export default function PracticeSession({ entries, pool, lang, young, soundOn, o
 
   return (
     <div className="game">
+      <div className="island-header">
+        <button onClick={onExit}>{lang === 'he' ? '→' : '←'} {t(lang, 'back')}</button>
+      </div>
       <p className="instruction">{t(lang, 'practiceInstruction')}</p>
       <div className="prompt">
         {young ? (
