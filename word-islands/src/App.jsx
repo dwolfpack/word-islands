@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   loadState,
   saveState,
@@ -6,6 +6,7 @@ import {
   recordResult,
   deleteProfile,
   enterWordsForIsland,
+  backfillReviews,
   dueReviews,
   buildSession,
   recordReview,
@@ -22,7 +23,7 @@ import PracticeSession from './components/PracticeSession.jsx';
 
 export default function App() {
   const [state, setState] = useState(loadState);
-  const [screen, setScreen] = useState('profiles'); // profiles | map | island | stickers
+  const [screen, setScreen] = useState('profiles'); // profiles | map | island | stickers | practice
   const [islandId, setIslandId] = useState(null);
   const [practice, setPractice] = useState(null); // { entries, pool } snapshot | null
 
@@ -45,11 +46,18 @@ export default function App() {
 
   const dueCount = profile ? dueReviews(profile, todayStr()).length : 0;
 
+  useEffect(() => {
+    if (!profile) return;
+    updateFn((prev) => backfillReviews(prev, profile.id, MANIFEST[profile.path], todayStr()));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile?.id]);
+
   const startPractice = () => {
     const today = todayStr();
     const entries = buildSession(profile, today, 10)
       .map((key) => ({ key, word: wordForKey(profile.path, key), box: profile.reviews[key].box }))
       .filter((e) => e.word);
+    if (!entries.length) return;
     const seen = new Set();
     const pool = Object.keys(profile.reviews || {})
       .map((key) => wordForKey(profile.path, key))

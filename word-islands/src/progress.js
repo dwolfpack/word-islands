@@ -91,6 +91,21 @@ export function enterWordsForIsland(state, profileId, islandId, words, today) {
   };
 }
 
+// Backfills the review schedule for islands a profile already completed
+// before the practice feature existed. Reuses enterWordsForIsland, so words
+// already tracked are never reset.
+export function backfillReviews(state, profileId, islands, today) {
+  const profile = state.profiles.find((p) => p.id === profileId);
+  if (!profile) return state;
+  let next = state;
+  for (const island of islands) {
+    if (profile.islands[island.id]) {
+      next = enterWordsForIsland(next, profileId, island.id, island.words, today);
+    }
+  }
+  return next;
+}
+
 // Keys of words due for review on or before `today`.
 export function dueReviews(profile, today) {
   return Object.entries(profile.reviews || {})
